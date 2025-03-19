@@ -9,6 +9,11 @@ A **full-stack Apartment Listing Application** built using:
 - **Docker**: Docker Compose setup for both frontend and backend
 
 ---
+# Important Notes
+ - I have added the backend and frontend in one repo and one branch here for simplicity only but in the real applications we do not do that.
+
+ - authentication was not required in the task so i made the endpoints public.
+
 
 ## Table of Contents
 
