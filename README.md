@@ -1,113 +1,200 @@
-# Apartment Listing API
 
-A public backend API for managing apartment listings, built using **Node.js**, **Express**, and **TypeScript**, with **Sequelize** (via **sequelize-typescript**) to interact with a **PostgreSQL** database. This version does not include user authentication, so **all endpoints** are open.
+# Apartment Listing Application
+
+A **full-stack Apartment Listing Application** built using:
+
+- **Backend**: Node.js, Express, TypeScript, Sequelize (PostgreSQL)
+- **Frontend**: Next.js, TypeScript, Tailwind CSS
+- **Database**: PostgreSQL
+- **Docker**: Docker Compose setup for both frontend and backend
+
+---
 
 ## Table of Contents
 
 - [Overview](#overview)
 - [Technologies Used](#technologies-used)
 - [Project Structure](#project-structure)
+  - [Backend](#backend)
+  - [Frontend](#frontend)
 - [Installation and Setup](#installation-and-setup)
 - [Configuration](#configuration)
+  - [Backend Configuration](#backend-configuration)
+  - [Frontend Configuration](#frontend-configuration)
 - [Database](#database)
 - [Running the Application](#running-the-application)
+  - [Docker Setup](#docker-setup)
+  - [Manual Setup](#manual-setup)
 - [API Endpoints](#api-endpoints)
+- [Frontend Routes](#frontend-routes)
 - [Postman Collection](#postman-collection)
-- [Why These Packages and ORM?](#why-these-packages-and-orm)
 - [License](#license)
 
 ---
 
 ## Overview
 
-This API allows you to **create**, **retrieve**, and **manage** apartment records.  
-It leverages **TypeScript** for improved reliability and maintainability, and uses **Sequelize** together with **sequelize-typescript** for a clean, class-based approach to data modeling. All endpoints are **public**—there is no user model or authentication.
+This is a full-stack web application that allows you to **create**, **view**, and **manage apartment listings**. The backend is written in TypeScript using Express and Sequelize ORM with a PostgreSQL database. The frontend is built with Next.js using TypeScript and Tailwind CSS.
+
+The project is containerized with Docker, making it easy to set up and run consistently across environments.
 
 ---
 
 ## Technologies Used
 
-- **Node.js & Express**  
-  - Powers the HTTP server and provides a straightforward way to define routes.
+### Backend
+- **Node.js** – JavaScript runtime for handling server requests  
+- **Express** – Web framework for creating RESTful APIs  
+- **Sequelize** – ORM for database interaction  
+- **PostgreSQL** – Relational database for storing data  
+- **TypeScript** – Strongly typed language for improved code quality  
+- **Docker** – Containerization for consistent setup across systems  
 
-- **TypeScript**  
-  - Offers static type checking, making the code more maintainable and reducing runtime errors.
+### Frontend
+- **Next.js** – React framework for server-side rendering  
+- **React** – Component-based frontend framework  
+- **Tailwind CSS** – Utility-first CSS framework for styling  
+- **TypeScript** – Static type checking for better code safety  
 
-- **Sequelize & sequelize-typescript**  
-  - **Sequelize**: A popular ORM that abstracts SQL queries, making database operations more intuitive.  
-  - **sequelize-typescript**: Adds TypeScript decorators, enabling a class-based approach to defining models.
+---
 
-- **PostgreSQL**  
-  - A robust, open-source relational database.
-  **Database Credentials**
-  - PORT=5000
-  - DB_HOST=db
-  - DB_PORT=5432 ---> adjust this as your need as if you have an instance of db server running with this port it will produce conflicts. thanks
-  - DB_USER=postgres
-  - DB_PASSWORD=postgres
-  - DB_NAME=apartments
+## Project Structure
 
-- **dotenv**  
-  - Loads environment variables from a `.env` file, keeping sensitive configuration out of the code.
+### Backend
+```plaintext
+backend/
+├── src/
+│   ├── controllers/
+│   │   └── apartmentController.ts      # Endpoint logic for apartments
+│   ├── db/
+│   │   └── index.ts                    # Sequelize database connection
+│   ├── models/
+│   │   └── Apartment.ts                # Apartment model
+│   ├── routes/
+│   │   └── apartmentRoutes.ts          # API routes for apartments
+│   ├── services/
+│   │   └── apartmentService.ts         # Business logic
+│   └── app.ts                          # Main entry point
+├── .env                                # Environment variables
+├── Dockerfile                          # Docker setup for backend
+├── tsconfig.json                       # TypeScript config
+├── package.json                        # Backend dependencies
+└── sequelize-config.json               # Sequelize config
+```
 
-- **ts-node & nodemon**  
-  - **ts-node**: Allows you to run TypeScript files directly without manual compilation.  
-  - **nodemon**: Automatically restarts the server when files change, streamlining the development process.
+---
+
+### Frontend
+```plaintext
+frontend/
+├── public/                             # Static assets
+├── src/
+│   ├── app/
+│   │   ├── apartment/
+│   │   │   ├── [id]/
+│   │   │   │   └── page.tsx            # Apartment details page
+│   │   │   └── page.tsx                # Apartment listing page
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.tsx                  # Main layout
+│   │   └── page.tsx                    # Home page
+├── Dockerfile                          # Docker setup for frontend
+├── next.config.js                      # Next.js config
+├── tsconfig.json                       # TypeScript config
+├── package.json                        # Frontend dependencies
+└── .env                                # Environment variables
+```
+
+---
+
+## Installation and Setup
+
+
+## Configuration
+
+### Backend Configuration
+Create a `.env` file in the `backend/` folder:
+```bash
+PORT=5000
+DB_HOST=db
+DB_PORT=5432
+DB_USER=postgres
+DB_PASSWORD=postgres
+DB_NAME=apartments
+```
+
+### Frontend Configuration
+Create a `.env` file in the `frontend/` folder:
+```bash
+```
+
+---
+
+## Database
+
+To create the database and tables:
+1. Start the containers:
+```bash
+docker-compose up -d
+```
+
+2. Run the migrations:
+```bash
+docker-compose exec backend npx sequelize-cli db:migrate
+```
+
+---
+
+## Running the Application
+
+### Docker Setup
+To build and run the containers:
+```bash
+docker compose up --build
+```
+
+
+
+
+---
+
+## API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| **GET** | `/api/apartments` | Fetch all apartments |
+| **GET** | `/api/apartments/:id` | Fetch an apartment by ID |
+| **POST** | `/api/apartments` | Create an apartment |
+
+### Example JSON for Creating an Apartment:
+```json
+{
+  "unitName": "Sunrise",
+  "unitNumber": "101",
+  "project": "Sunset Villas",
+  "description": "A lovely apartment with plenty of sunlight.",
+  "price": 1500
+}
+```
+
+---
+
+## Frontend Routes
+
+| Route | Description |
+|-------|-------------|
+| `/` | Home Page (Lists apartments) |
+| `/apartment/:id` | Apartment details |
+
+---
+
+## Postman Collection
+
+Import this Postman collection:
+
+[Download Postman Collection](./postman_collection.json)
 
 ---
 
 
-
-## Project Structure
-
-```plaintext
-apartment-listing-app/
-└── backend/
-    ├── src/
-    │   ├── controllers/
-    │   │   └── apartmentController.ts  # Endpoint logic for apartments
-    │   ├── db/
-    │   │   └── index.ts                # Sets up Sequelize connection
-    │   ├── models/
-    │   │   └── Apartment.ts            # Defines the Apartment model (via decorators)
-    │   ├── routes/
-    │   │   └── apartmentRoutes.ts      # Declares the apartment-related routes
-    │   ├── services/
-    │   │   └── apartmentService.ts     # Business logic and DB queries
-    │   └── app.ts                      # Main application entry point
-    ├── .env                            # Environment variables
-    ├── package.json                    # Lists dependencies and scripts
-    └── tsconfig.json                   # TypeScript compiler configuration
-
-
---
-
-# Frontend (Next.js) – Apartment Listings
-
-This Next.js application provides a front-end interface for listing apartments and viewing apartment details. It fetches data from a backend API and displays the results in a modern UI. The application uses server components for data fetching and client components for interactivity (such as search filtering).
-
-## Table of Contents
-
-- [Features](#features)
-- [Folder Structure](#folder-structure)
-- [Prerequisites](#prerequisites)
-- [Installation & Setup](#installation--setup)
-- [Running the App (Development)](#running-the-app-development)
-- [Running with Docker](#running-with-docker)
-- [Environment Variables](#environment-variables)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
-## Features
-
-- **Apartment Listings**: Displays a grid of apartments fetched from the backend.
-- **Detail Pages**: View specific apartment details by clicking on a listing.
-- **Client-Side Search**: Filter the listings in real time by unit name, number, or project. (the bouns task)
-- **Next.js App Router**: Utilizes server components for fetching data and client components for interactivity.
-- **Docker Support**: Easily run the frontend (and backend) using Docker Compose.
-
-## Folder Structure
-
-A typical project layout might look like this:
 
