@@ -1,14 +1,39 @@
-version: '3.8'
-
 services:
+  db:
+    image: postgres:13
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   backend:
     build: ./backend
     ports:
       - "5000:5000"
     env_file: ./backend/.env
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
     depends_on:
       - db
-    command: sh -c "mkdir -p src/migrations && npm run migrate && npm run start"
+    command: >
+      sh -c "apk add --no-cache postgresql-client &&
+      echo 'Waiting for database at ${DB_HOST}:${DB_PORT} as ${DB_USER}...' &&
+      until pg_isready -h ${DB_HOST} -p ${DB_PORT} -U ${DB_USER}; do
+        echo 'Waiting for database...';
+        sleep 2;
+      done;
+      echo 'Database is ready. Creating migrations folder...';
+      mkdir -p src/migrations &&
+      npm run migrate && npm run start"
 
   frontend:
     build: ./frontend
@@ -16,19 +41,8 @@ services:
       - "3000:3000"
     depends_on:
       - backend
-    env_file: ./frontend/.env
-
-  db:
-    image: postgres:13
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: apartments
-    ports:
-      - "5432:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+    # env_file: ./frontend/.env
 
 volumes:
   pgdata:
+
