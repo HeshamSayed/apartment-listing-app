@@ -1,14 +1,26 @@
+import 'reflect-metadata';
 import express from 'express';
+import dotenv from 'dotenv';
+import sequelize from './db';
+import apartmentRoutes from './routes/apartmentRoutes';
+import cors from "cors";
+
+dotenv.config();
 
 const app = express();
+app.use(cors());
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Welcome to the Apartment Listing API!');
-});
+app.use('/api/apartments', apartmentRoutes);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+
+sequelize.sync().then(() => {
+  console.log('Database synchronized');
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+  });
+}).catch(err => {
+  console.error('Unable to connect to the database:', err);
 });

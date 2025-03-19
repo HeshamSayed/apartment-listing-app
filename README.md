@@ -39,6 +39,13 @@ It leverages **TypeScript** for improved reliability and maintainability, and us
 
 - **PostgreSQL**  
   - A robust, open-source relational database.
+  **Database Credentials**
+  - PORT=5000
+  - DB_HOST=db
+  - DB_PORT=5432 ---> adjust this as your need as if you have an instance of db server running with this port it will produce conflicts. thanks
+  - DB_USER=postgres
+  - DB_PASSWORD=postgres
+  - DB_NAME=apartments
 
 - **dotenv**  
   - Loads environment variables from a `.env` file, keeping sensitive configuration out of the code.
@@ -48,6 +55,8 @@ It leverages **TypeScript** for improved reliability and maintainability, and us
   - **nodemon**: Automatically restarts the server when files change, streamlining the development process.
 
 ---
+
+
 
 ## Project Structure
 
