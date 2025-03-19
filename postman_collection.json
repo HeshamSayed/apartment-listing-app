@@ -1,0 +1,65 @@
+{
+  "info": {
+    "_postman_id": "abc12345-6789-0abc-def1-234567890abc",
+    "name": "Apartment Listing API (Public)",
+    "description": "Endpoints for managing apartments without authentication.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get All Apartments",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/apartment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "apartments"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Apartment by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5000/api/apartment/1",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "apartments", "1"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Apartment",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"unitName\": \"Sunrise\",\n  \"unitNumber\": \"101\",\n  \"project\": \"Sunset Villas\",\n  \"description\": \"A lovely apartment with plenty of sunlight.\",\n  \"price\": 1500\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5000/api/apartment",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "apartments"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
