@@ -145,7 +145,7 @@ docker compose up -d
 
 2. Run the migrations:
 ```bash
-docker-compose exec backend npx sequelize-cli db:migrate
+docker compose exec backend npx sequelize-cli db:migrate
 ```
 
 ---
