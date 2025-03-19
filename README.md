@@ -135,7 +135,7 @@ Create a `.env` file in the `frontend/` folder:
 To create the database and tables:
 1. Start the containers:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 2. Run the migrations:
