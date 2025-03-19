@@ -126,7 +126,6 @@ PORT=5000
 ### Global Configuration
 Create a `.env` file in the `root` folder outside backend and frontend:
 ```bash
-PORT=5000
 DB_HOST=db
 DB_PORT=5432
 DB_USER=postgres
