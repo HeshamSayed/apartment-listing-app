@@ -193,7 +193,7 @@ docker compose up --build
 
 | Route | Description |
 |-------|-------------|
-| `/` | Home Page (Lists apartments) |
+| `/apartment` | Home Page (Lists apartments) |
 | `/apartment/:id` | Apartment details |
 
 ---
